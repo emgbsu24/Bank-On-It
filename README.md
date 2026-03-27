@@ -1,65 +1,88 @@
 # Bank-On-It
 Part 1
 
-
-```  mermaid
+``` mermaid
 classDiagram
+
 class HasMenu {
-    <<interface>>
     +menu() String
     +start() void
 }
 
-class CheckingAccount {
-    -double balance
-    +CheckingAccount()
-    +CheckingAccount(double)
+class User {
+    -userName : String
+    -PIN : String
+    +login() boolean
+    +login(userName, PIN) boolean
+    +setUserName(userName) void
+    +getUserName() String
+    +setPIN(PIN) void
+    +getPIN() String
+    +getReport() String
+}
+
+class Admin {
+    +Admin()
     +menu() String
+    +getReport() String
+}
+
+class Customer {
+    -checking : CheckingAccount
+    -savings : SavingsAccount
+    +Customer()
     +start() void
+    +menu() String
+    +changePIN() void
+    +getReport() String
+}
+
+class CheckingAccount {
+    -balance : double
+    +CheckingAccount()
+    +CheckingAccount(balance)
+    +menu() String
+    +start() String
     +getBalance() double
     +getBalanceString() String
-    +setBalance(double) void
+    +setBalance(balance) void
     +checkBalance() void
-    -getDouble() double
     +makeDeposit() void
     +makeWithdrawal() void
 }
 
 class SavingsAccount {
-    -double interestRate
+    -interestRate : double
     +calcInterest() void
-    +setInterestRate(double) void
+    +setInterestRate() void
     +getInterestRate() double
 }
 
-class User {
-    <<abstract>>
-    -String userName
-    -String PIN
-    +login() boolean
-    +login(String, String) boolean
-    +setUserName(String) void
-    +getUserName() String
-    +setPIN(String) void
-    +getPIN() String
-    +getReport() String*
+class Bank {
+    -admin : Admin
+    -customers : ArrayList
+    +Bank()
+    +main() void
+    +loadSampleCustomers() void
+    +loadCustomers() void
+    +saveCustomers() void
+    +fullCustomerReport() void
+    +addUser() void
+    +applyInterest() void
+    +loginAsCustomer() void
+    +menu() void
+    +start() void
+    +startAdmin() void
 }
 
-class Customer {
-    -CheckingAccount checking
-    -SavingsAccount savings
-    +Customer()
-    +Customer(String, String)
-    +menu() String
-    +start() void
-    +changePin() void
-    +getReport() String
-}
+User <|-- Admin
+HasMenu <|.. User
+
+CheckingAccount <|-- SavingsAccount
 
 HasMenu <|.. CheckingAccount
-HasMenu <|.. User
-CheckingAccount <|-- SavingsAccount
 User <|-- Customer
-Customer --> CheckingAccount
-Customer --> SavingsAccount
+
+Bank --> Admin
+Bank --> Customer
 ```

@@ -2,11 +2,24 @@ public class Customer extends User {
 	private CheckingAccount checking;
 	private SavingsAccount savings;
 
+	public Customer() {
+		checking = new CheckingAccount();
+		savings = new SavingsAccount();
+	}
+
 	public Customer(String u, String p) {
 		userName = u;
 		PIN = p;
 		checking = new CheckingAccount();
 		savings = new SavingsAccount();
+	}
+
+	public CheckingAccount getChecking() {
+		return checking;
+	}
+
+	public SavingsAccount getSavings() {
+		return savings;
 	}
 
 	public static void main(String[] args) {
@@ -42,6 +55,8 @@ public class Customer extends User {
 	}
 
 	public String getReport() {
-		return "User: " + userName;
+		return "User: " + userName +
+			", Checking: " + checking.getBalanceString() +
+			", Savings: " + savings.getBalanceString();
 	}
 }
